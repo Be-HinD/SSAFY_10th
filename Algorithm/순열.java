@@ -46,6 +46,4 @@ public class Main { //3개의 수 순열
             visited[i] = false;
         }
     }
-
-    // n개의 수 중 r개를 뽑는
 }
