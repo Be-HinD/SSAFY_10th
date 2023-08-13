@@ -25,8 +25,8 @@ public class Main { //3개의 수 순열
     }
     // n개의 수 중 r개를 뽑는 npr순열 (n!)
     private static void npr(int cnt) { //cnt : 지금껏 몇개의 수를 선택했는지
-        // 2개를 선택했으므로, 결과를 출력하고 재귀를 종료한다.
-        if (cnt == 2) {
+        // r개를 선택했으므로, 결과를 출력하고 재귀를 종료한다.
+        if (cnt == result.length) {
             System.out.println(Arrays.toString(result));
             return;
         }
