@@ -1,5 +1,5 @@
 public class Main { //{1,2,3,4}집합의 모든 부분집합
-    static int[] arr, result;
+    static int[] arr;
     static boolean[] isSelected;
     public static void main(String[] args) {
         arr = new int[] {1,2,3,4}; //부분집합을 뽑을 대상 집합배열
