@@ -6,8 +6,18 @@ import java.util.*;
 public class Main {
 	
 	public static void main(String[] args) throws IOException {
-		
-		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BynarySearchTree tree = new BynarySearchTree();
+		int cnt = 0;
+		while(true) {
+			try {
+				int idx = Integer.parseInt(br.readLine());
+				cnt++;
+				tree.AddNode(idx);
+			} catch (IOException e) {
+				tree.postorderTree(tree.root, 0);
+			}
+		}
 		
 	}
 }
@@ -97,10 +107,82 @@ class BynarySearchTree {
 		
 		//삭제대상노드의 왼쪽 오른쪽 자식 모두 존재할 경우
 		if(removeNode.leftNode != null && removeNode.rightNode != null) {
-			if()
+			//왼쪽 서브트리의 가장 큰 값 or 오른쪽 서브트리의 가장 작은 값으로 대체 (여기서는 전자 사용)
+			Node ParentNode = removeNode; //대체노드의 부모노드
+			
+			//삭제 노드 왼쪽 서브 트리에서 탐색
+			Node replaceNode = removeNode.leftNode;
+			
+			while(replaceNode.rightNode != null) { //오른쪽 자식이 없다면 왼쪽에서 가장 큰값
+				ParentNode = replaceNode;
+				replaceNode = replaceNode.rightNode;
+			}
+			
+			if(replaceNode != removeNode.rightNode) {
+				//가장 큰 값을 선택하기 때문에 대체 노드의 왼쪽 자식은 빈 노드가 되버리는 걸 처리
+				ParentNode.rightNode = replaceNode.leftNode;
+				
+				replaceNode.leftNode = removeNode.leftNode;
+			}
+			
+			//삭제할 노드가 루트 노드인 경우 대체할 노드로 바꿈
+			if(removeNode == root) {
+				root = removeNode;
+			} else if (removeNode == ParentNode.leftNode) {
+				ParentNode.leftNode = replaceNode;
+			} else {
+				ParentNode.rightNode = replaceNode;
+			}
+			
+			//삭제 대상노드의 오른쪽 자식 이어감
+			replaceNode.rightNode = removeNode.rightNode;
 		}
-		
+		return true;
 	}
+	
+	/**
+     * 중위 순회
+     */
+    public void inorderTree(Node root, int depth) {
+        if (root != null) {
+            inorderTree(root.leftNode, depth + 1);
+            for (int i = 0; i < depth; i++) {
+                System.out.print("ㄴ");
+            }
+            System.out.println(root.Vertex);
+            inorderTree(root.rightNode, depth + 1);
+        }
+    }
+
+    /**
+     * 후위 순회
+     */
+    public void postorderTree(Node root, int depth) {
+        if (root != null) {
+            postorderTree(root.leftNode, depth + 1);
+            postorderTree(root.rightNode, depth + 1);
+            for (int i = 0; i < depth; i++) {
+                System.out.print("ㄴ");
+            }
+            System.out.println(root.Vertex);
+        }
+    }
+
+    /**
+     * 전위 순회
+     */
+    public void preorderTree(Node root, int depth) {
+        if (root != null) {
+            for (int i = 0; i < depth; i++) {
+                System.out.print("ㄴ");
+            }
+            System.out.println(root.Vertex);
+            preorderTree(root.leftNode, depth + 1);
+            preorderTree(root.rightNode, depth + 1);
+        }
+    }
+    
+    
 }
 class Node {
 	int Vertex;
